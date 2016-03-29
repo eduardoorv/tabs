@@ -1,7 +1,7 @@
 shinyUI(
   navbarPage("App Title",
              tabPanel("DATOS", fileInput("archivo", "Archivo", multiple = FALSE), 
-                      verbatimTextOutput("summary")),
-             tabPanel("ESTADISTICA", plotOutput("hist")),
+                      verbatimTextOutput("tail")),
+             tabPanel("ESTADISTICA", verbatimTextOutput("hist")),
              tabPanel("GRAFICAS", plotOutput("plot"))
 ))
