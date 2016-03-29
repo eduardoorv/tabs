@@ -85,7 +85,7 @@ function(input, output, session){
     tail(data())
   })
   
-  output$hist <- renderPrint({
+  output$hist <- renderTable({
     nu(data())
   })
   
