@@ -76,8 +76,15 @@ function(input, output, session){
       conn <- file(input$archivo$datapath, "r")
       y <- clean_file(readLines(conn, n = -1))
       close(conn)
-      data_frame(y)
-        
+      dat <- data_frame(y)
+      #switch (input$select, "sismo" =dat[dat$EXP == 1,], "hidro" = dat[dat$EXP != 1,], "total" = dat)
+      if (input$select == "sismo") {
+        dat[dat$Temporalidad == 1,]
+      }else{ 
+        if(input$select == "hidro"){
+          dat[dat$Temporalidad != 1,]
+      } else dat
+      }
     }
   })
     
@@ -86,7 +93,10 @@ function(input, output, session){
   })
   
   output$hist <- renderTable({
+    
+    #switch (input$select, "sismo" = nu(data()[data()$EXP == 1,]), "hidro" = nu(data()[data()$EXP != 1,]), "total" = nu(data()))
     nu(data())
+    
   })
   
   output$plot <- renderPlot({
