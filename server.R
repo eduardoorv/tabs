@@ -100,7 +100,8 @@ function(input, output, session){
   })
   
   output$plot <- renderPlot({
-    plot(data())
+    
+    plot(nu(data())[["Pérdida"]], nu(data())[[input$select2]], type = "l", xlab = "Pérdida", ylab = input$select2)
   })
   
 }
