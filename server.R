@@ -62,7 +62,7 @@ function(input, output, session){
     
     dat_fr <- data.frame(p, expo, r, prob_exc, per_ret, prob_acum)
     
-    names(dat_fr) <- c("perdida", "exposicion", "output", "prob excedencia", "periodo de retorno", "prob acumulada")
+    names(dat_fr) <- c("perdida", "exposicion", "output", "prob_excedencia", "periodo_retorno", "prob_acumulada")
     
     return(dat_fr)
   }
@@ -101,25 +101,12 @@ function(input, output, session){
   
   output$plot <- renderPlot({
     
-    #data_table <- nu(data())
-    plot(nu(data())[["perdida"]], nu(data())[[input$select2]])#, xlab = "Pérdida", ylab = input$select2)
-    #qplot(data_table[["Pérdida"]], data_table[[input$select2]])
-    #ggplot(nu(data()), aes_string(names(nu(data()))[1], names(nu(data()))[1])) +
-    #  geom_line()
+    data_table <- nu(data())
+    #plot(data_table[["perdida"]], data_table[[input$select2]])#, xlab = "Pérdida", ylab = input$select2)
+     ggplot(data_table, aes_string(names(data_table)[1], input$select2)) + geom_line()
   })
   
 }
 
-#output$graficas <- renderPlot({
-#  qplot(perdida, get(input$tipoGrafica), 
-#        data = estadistica(), 
-#        xlab = "Pérdidas",
-#        ylab = input$tipoGrafica,
-#        geom = "line",
-#        colour = I("sky blue")
-#  )
-#})
-
-#nu(data())[["Pérdida"]]
 
 

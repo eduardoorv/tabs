@@ -6,7 +6,7 @@ shinyUI(
              tabPanel("ESTADISTICA", tableOutput("hist")),
              tabPanel("GRAFICAS", plotOutput("plot"),  
                       selectInput("select2", label = h3("Select box"), 
-                                  choices = list("perdida", "exposicion", "output", "prob excedencia", "periodo de retorno", "prob acumulada"), 
+                                  choices = list("perdida", "exposicion", "output", "prob_excedencia", "periodo_retorno", "prob_acumulada"), 
                                   selected = "Pérdida")
 ), theme = "Flatly.css"
 ))
