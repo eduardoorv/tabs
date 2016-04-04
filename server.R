@@ -88,7 +88,7 @@ function(input, output, session){
     }
   })
     
-  output$tail <- renderPrint({
+  output$tail <- renderTable({
     tail(data())
   })
   
@@ -99,12 +99,47 @@ function(input, output, session){
     
   })
   
+  output$downloadData <- downloadHandler(
+    
+    # This function returns a string which tells the client
+    # browser what name to use when saving the file.
+    filename = function() {
+      paste("Datos", input$filetype, sep = ".")
+    },
+    
+    # This function should write data to a file given to it by
+    # the argument 'file'.
+    content = function(file) {
+      sep <- switch(input$filetype, "csv" = ",", "xls" = "\t")
+      
+      # Write to a file specified by the 'file' argument
+      write.table(nu(data()), file, sep = sep,
+                  row.names = FALSE)
+    }
+  )
+  
+  plotInput <- reactive({
+    
+    data_table <- nu(data())
+    #plot(data_table[["perdida"]], data_table[[input$select2]])#, xlab = "Pérdida", ylab = input$select2)
+    p <- ggplot(data_table, aes_string(names(data_table)[1], input$select2)) + geom_line()
+    
+  })
+  
   output$plot <- renderPlot({
     
     data_table <- nu(data())
     #plot(data_table[["perdida"]], data_table[[input$select2]])#, xlab = "Pérdida", ylab = input$select2)
      ggplot(data_table, aes_string(names(data_table)[1], input$select2)) + geom_line()
-  })
+  
+     })
+  
+  output$downloadPlot <- downloadHandler(
+    filename = function() { paste(input$select2, '.', input$imagetype, sep='') },
+    content = function(file) {
+      ggsave(file,plotInput())
+    }
+  )
   
 }
 
